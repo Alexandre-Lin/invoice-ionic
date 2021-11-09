@@ -1,3 +1,6 @@
 {
-    
+    "INVOICE_APP": "Invoice app",
+    "INVOICES": "Invoices",
+    "NEW_INVOICE": "New invoices",
+    "OTHER": "Other"
 }

@@ -1,19 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="app-header-title">
+        <span>{{'INVOICE_APP' | translate}}</span>
+        <div class="app-header-title-languages">
+          <img src="./assets/icon/fr_flag.svg"/>
+          <ion-toggle [ngModel]="isZh" (ionChange)="checkCurrentLanguage()"></ion-toggle>
+          <img src="./assets/icon/zh_flag.svg"/>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
+
+    <!-- Previous stored invoices tab-->
     <ion-tab-button tab="tab1">
-      <ion-icon name="triangle"></ion-icon>
-      <ion-label>Tab 1</ion-label>
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>{{'INVOICES' | translate}}</ion-label>
     </ion-tab-button>
 
+    <!-- Create a new invoice tab-->
     <ion-tab-button tab="tab2">
-      <ion-icon name="ellipse"></ion-icon>
-      <ion-label>Tab 2</ion-label>
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <ion-label>{{'NEW_INVOICE' | translate}}</ion-label>
     </ion-tab-button>
 
+
+    <!-- Other settings tab-->
     <ion-tab-button tab="tab3">
-      <ion-icon name="square"></ion-icon>
-      <ion-label>Tab 3</ion-label>
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>{{'OTHER' | translate}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
