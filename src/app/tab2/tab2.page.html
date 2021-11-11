@@ -3,12 +3,25 @@
     height: 95vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;">
-        <ion-list style="padding-top: 5vh;">
+    justify-content: space-between;
+    padding-top: 5vh;">
+        <ion-list style="max-height: 90vh; overflow-y: auto;">
             <ion-list-header>
                 <ion-label>
                     <h1>{{"PRODUCTS" | translate}}</h1>
                 </ion-label>
+
+                <ion-item style="width: 35vw;">
+                    <ion-label position="fixed">{{"PAYMENT_MODE" | translate}}</ion-label>
+
+                    <ion-select [(ngModel)]="invoice.paymentMode" okText="OK"
+                        [cancelText]="translateService.instant('CANCEL')">
+                        <ion-select-option [value]="CB">1.{{"CB" | translate}}</ion-select-option>
+                        <ion-select-option [value]="CASH">2.{{"CASH" | translate}}</ion-select-option>
+                        <ion-select-option [value]="CHECK">3.{{"CHECK_PAYMENT" | translate}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
             </ion-list-header>
 
             <!-- product saved in invoice -->
@@ -125,35 +138,40 @@
         </ion-list>
 
 
-        <ion-footer>
+        <ion-footer style="z-index: 50; position: sticky;">
             <ion-toolbar>
                 <ion-title>
                     <ion-grid>
                         <ion-row>
 
-                            <ion-col>
+                            <ion-col style="display: flex; align-items: center; justify-content: center;">
                                 <!-- date -->
                                 <ion-label>
-                                    {{"DATE" | translate}} : {{invoice.date.locale('fr').format('LLLL')}}
+                                    <i>{{"DATE" | translate}} : {{invoice.date.locale('fr').format('lll')}}</i>
                                 </ion-label>
                             </ion-col>
 
-                            <ion-col>
+                            <ion-col style="display: flex; align-items: center; justify-content: space-around;">
                                 <!-- Total and tax charge included -->
                                 <ion-label>
-                                    <i>{{"TAX" | translate}}: {{invoice.total/(1 + invoice.tax/100)}} € ({{invoice.tax}}%)</i>
+                                    <i>{{"TAX" | translate}}: {{invoice.total - invoice.total/(1 + invoice.tax/100) | number: '1.2-2'}}
+                                        €
+                                        ({{invoice.tax}}%)</i>
                                     {{"TOTAL" | translate}}: {{invoice.total}} €
                                 </ion-label>
+
+                                <ion-button size="small" (click)="print()">
+                                    <!-- print -->
+                                    <ion-icon name="print-outline"></ion-icon>
+                                </ion-button>
                             </ion-col>
+
                         </ion-row>
                     </ion-grid>
 
-                    <!-- print -->
                 </ion-title>
             </ion-toolbar>
         </ion-footer>
-
-
 
     </div>
 </ion-content>

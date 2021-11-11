@@ -13,7 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     Tab2PageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   declarations: [Tab2Page]
 })

@@ -14,5 +14,10 @@
     "CUSTOM":"Personnalisé",
     "ADD_NEW_PRODUCT": "Ajouter un nouveau produit",
     "DATE":"Date",
-    "TAX":"Taxe"
+    "TAX":"Taxe",
+    "PRINT":"Imprimer",
+    "PAYMENT_MODE":"Mode",
+    "CHECK_PAYMENT":"Chèque",
+    "CB":"CB",
+    "CASH":"Espèces"
 }

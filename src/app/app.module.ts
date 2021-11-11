@@ -14,6 +14,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+import { PreviewPrintComponent } from './preview-print/preview-print.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -21,7 +22,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,PreviewPrintComponent],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
