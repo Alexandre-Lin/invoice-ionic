@@ -2,5 +2,12 @@
     "INVOICE_APP": "Invoice app",
     "INVOICES": "Invoices",
     "NEW_INVOICE": "New invoices",
-    "OTHER": "Other"
+    "OTHER": "Other",
+    "PRODUCTS":"Products",
+    "DELETE":"Delete",
+    "ADD":"Add",
+    "PRICE":"Price",
+    "QUANTITY":"Quantity",
+    "DESIGNATION":"Designation",
+    "TOTAL":"Total"
 }

@@ -1,0 +1,10 @@
+{
+    "tax_percentage": 20,
+    "product_names": [
+        {
+            "en":"test",
+            "fr":"produit test",
+            "zh":"test product"
+        }
+    ]
+}

@@ -2,5 +2,17 @@
     "INVOICE_APP": "Application facture",
     "INVOICES": "Factures",
     "NEW_INVOICE": "Nouvelle facture",
-    "OTHER": "Autres"
+    "OTHER": "Autres",
+    "PRODUCTS": "Produits",
+    "DELETE":"Supprimer",
+    "ADD":"Ajouter",
+    "PRICE":"Prix",
+    "QUANTITY":"Quantité",
+    "DESIGNATION":"Désignation",
+    "TOTAL":"Total",
+    "CANCEL":"Annuler",
+    "CUSTOM":"Personnalisé",
+    "ADD_NEW_PRODUCT": "Ajouter un nouveau produit",
+    "DATE":"Date",
+    "TAX":"Taxe"
 }

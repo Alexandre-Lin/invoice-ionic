@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ProductConfigService } from '../services/product-config.service';
 
 @Component({
   selector: 'app-tabs',
@@ -10,11 +11,17 @@ export class TabsPage {
 
   isZh : boolean = false;
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService, private productConfigService: ProductConfigService) {
     if (this.translateService.currentLang == "fr")
+    {
       this.isZh = false;
+      this.productConfigService.loadProductNameList("fr");
+    }
     else
+    {
       this.isZh = true;
+      this.productConfigService.loadProductNameList("zh");
+    }
   }
 
   /**
@@ -25,12 +32,13 @@ export class TabsPage {
     {
       this.translateService.use("zh");
       this.isZh = true;
+      this.productConfigService.loadProductNameList("zh");
     }
     else 
     {
       this.translateService.use("fr")
       this.isZh = false;
+      this.productConfigService.loadProductNameList("fr");
     }
   }
-
 }
