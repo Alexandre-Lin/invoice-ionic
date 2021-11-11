@@ -167,7 +167,7 @@ export class Tab2Page implements OnInit {
       this.invoice.paymentMode = "CASH"
     }
     if(this.invoice.paymentMode.includes("3")){
-      this.invoice.paymentMode = "CHECK"
+      this.invoice.paymentMode = "CHECK_PAYMENT"
     }
 
 

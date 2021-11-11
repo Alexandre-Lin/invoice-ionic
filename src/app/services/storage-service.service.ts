@@ -2,6 +2,7 @@ import { InvokeFunctionExpr } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver'
 import { BehaviorSubject } from 'rxjs';
@@ -50,7 +51,7 @@ export class StorageServiceService {
       return "1";
     }
     else {
-      const maxKey = Math.max.apply(Math, keys.map((key)=> +key));
+      const maxKey = Math.max.apply(Math, keys.map((key) => +key));
       await this.set((maxKey + 1).toString(), JSON.stringify(invoice));
       return (maxKey + 1).toString();
     }
@@ -67,7 +68,7 @@ export class StorageServiceService {
   public async getAllInvoices(): Promise<InvoiceItem[]> {
     let invoices: InvoiceItem[] = [];
     await this._storage?.forEach((value, key, index) => {
-      const invoice:Invoice = JSON.parse(value);
+      const invoice: Invoice = JSON.parse(value);
       invoices.push({
         keyStoredId: key,
         date: invoice.date,
@@ -86,5 +87,13 @@ export class StorageServiceService {
    */
   observeChanges(): BehaviorSubject<boolean> {
     return this.$detectChanges;
+  }
+
+  /**
+   * To remove a given invoice
+   */
+  async deleteFromKey(key: string) {
+    await this._storage?.remove(key);
+    this.$detectChanges.next(!this.$detectChanges.value);
   }
 }

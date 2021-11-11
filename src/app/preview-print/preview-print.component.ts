@@ -29,7 +29,7 @@ export class PreviewPrintComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.currentKey = params["key"];
-      this.storageService.getFromKey(this.currentKey).then(invoice => { this.currentInvoice = invoice;});
+      this.storageService.getFromKey(this.currentKey).then(invoice => { this.currentInvoice = invoice; console.log(this.currentInvoice);});
     })
   }
 }

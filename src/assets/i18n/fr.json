@@ -19,5 +19,7 @@
     "PAYMENT_MODE":"Mode",
     "CHECK_PAYMENT":"Chèque",
     "CB":"CB",
-    "CASH":"Espèces"
+    "CASH":"Espèces",
+    "VIEW":"Voir",
+    "YES":"Oui"
 }
