@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "invoice-ionic",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
