@@ -19,3 +19,5 @@ The application uses the Ionic Angular Storage package.
 There is a file named file-config-products.json loacted in assets folder which permits to load some products' value at start. (also the tax is included).
 
 All the printed invoices will be in French, the others languages are only for the users' comfort when creating invoices.
+
+The options (download and upload file data for the locale storage) only works for iOS.
