@@ -16,6 +16,10 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { PreviewPrintComponent } from './preview-print/preview-print.component';
 
+import {File} from '@ionic-native/file/ngx';
+import {FileTransfer} from '@ionic-native/file-transfer/ngx';
+import {DocumentPicker} from '@ionic-native/document-picker/ngx';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,7 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
       defaultLanguage: "fr"
     }
     )],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileTransfer, DocumentPicker],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

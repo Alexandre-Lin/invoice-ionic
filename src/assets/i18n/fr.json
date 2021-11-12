@@ -21,5 +21,8 @@
     "CB":"CB",
     "CASH":"Espèces",
     "VIEW":"Voir",
-    "YES":"Oui"
+    "YES":"Oui",
+    "CHANGE_TAX":"Changer taxe",
+    "DOWNLOAD":"Sauvegarder les factures",
+    "UPLOAD":"Téléverser des factures"
 }

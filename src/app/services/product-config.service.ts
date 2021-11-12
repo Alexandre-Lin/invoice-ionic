@@ -16,7 +16,7 @@ export class ProductConfigService {
   /** 
    * the tax percentage, loaded from the file-config-products.json file
   */
-  tax_percentage: number = 20;
+  tax_percentage: number = null;
 
   /**
    * For detecting changes
@@ -64,7 +64,7 @@ export class ProductConfigService {
    * @returns loaded the tax percentage
    */
   getTaxPercentage(): number {
-    if (this.product_list_names === undefined || this.product_list_names === null) {
+    if (this.tax_percentage === undefined || this.tax_percentage === null) {
       this.loadProductNameList("fr");
     }
     return this.tax_percentage;
@@ -76,5 +76,10 @@ export class ProductConfigService {
    */
   observeChanges(): BehaviorSubject<boolean> {
     return this.$detectChanges;
+  }
+
+  setTaxPercentage(new_tax: number) {
+    this.tax_percentage = new_tax;
+    this.$detectChanges.next(!this.$detectChanges.value);
   }
 }
