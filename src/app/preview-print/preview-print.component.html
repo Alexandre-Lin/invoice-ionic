@@ -1,18 +1,147 @@
 <ion-content>
-  <!-- back button -->
-  <div>
+  <!-- back button  and print button-->
+  <div class="generated-invoice-header-box">
     <ion-button [routerLink]="['/tabs']">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-button>
   </div>
 
   <!-- the generated invoice-->
-  <div>
+  <div class="generated-invoice-box">
+    <table *ngIf="isLoaded">
+      <thead>
 
-  </div>
+      </thead>
 
-  <!-- print button-->
-  <div>
 
+      <tbody>
+      <!-- invoice -->
+      <tr>
+        <td style="font-size: 40px;">
+          {{'INVOICE' | translate}}
+        </td>
+      </tr>
+
+      <!-- date -->
+      <tr>
+        <td style="text-align: right; padding-right: 1vw;">
+          {{currentInvoice.date.locale('fr').format('lll')}}
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>
+
+        </td>
+
+        <!-- customer's name-->
+        <td>
+
+        </td>
+      </tr>
+
+      <!-- payment method -->
+      <tr>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                {{'PAYMENT_MODE_PRINTER' | translate}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {{currentInvoice.paymentMode}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+
+      <!-- product list-->
+      <tr>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                {{'PRODUCT_LIST_PRINTER' | translate}}
+              </th>
+              <th>
+
+              </th>
+              <th>
+
+              </th>
+              <th>
+
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let productItem of currentInvoice.productList">
+              <td>
+                {{productItem.designation}}
+              </td>
+              <td>
+                {{productItem.price}}€
+              </td>
+              <td>
+                {{productItem.quantity}}
+              </td>
+              <td>
+                {{productItem.quantity * productItem.price}}€
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+        
+    </tbody>
+
+      <!-- total and tax-->
+      <tfoot>
+      <tr>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                {{'TOTAL_PRINTER' | translate}}
+              </th>
+              <th>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {{'TAX_PRINTER' | translate}} ({{currentInvoice.tax}}%)
+              </td>
+
+              <td>
+                {{currentInvoice.total - currentInvoice.total/(1 + currentInvoice.tax/100) | number: '1.2-2'}}€
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                {{'TOTAL_PRINTER' | translate}}
+              </td>
+
+              <td>
+                {{currentInvoice.total}}€
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </tr>
+    </tfoot>
+
+    </table>
   </div>
 </ion-content>

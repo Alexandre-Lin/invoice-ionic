@@ -1,0 +1,30 @@
+.generated-invoice-header-box {
+    position: fixed;
+    top: 0;
+}
+
+.generated-invoice-box {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    padding: 1vh;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 500px;
+        color: black;
+
+        td {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        th {
+            text-align: left;
+            padding-left: 1vw;
+            font-size: 30px;
+            background-color: lightgray;
+        }
+    }
+}

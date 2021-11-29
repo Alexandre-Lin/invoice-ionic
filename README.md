@@ -21,3 +21,5 @@ There is a file named file-config-products.json loacted in assets folder which p
 All the printed invoices will be in French, the others languages are only for the users' comfort when creating invoices.
 
 The options (download and upload file data for the locale storage) only works for iOS.
+
+The application for the € currency.

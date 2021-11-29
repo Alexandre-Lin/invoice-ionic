@@ -24,5 +24,10 @@
     "YES":"Oui",
     "CHANGE_TAX":"Changer taxe",
     "DOWNLOAD":"Sauvegarder les factures",
-    "UPLOAD":"Téléverser des factures"
+    "UPLOAD":"Téléverser des factures",
+    "PAYMENT_MODE_PRINTER":"Mode de paiement",
+    "PRODUCT_LIST_PRINTER":"Liste des produits",
+    "TOTAL_PRINTER":"Total",
+    "TAX_PRINTER":"Taxe",
+    "INVOICE": "Facture"
 }

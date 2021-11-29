@@ -61,7 +61,7 @@ export class StorageServiceService {
    * To get invoice from the selected key
    * @param key the selected key
    */
-  public async getFromKey(key: string): Promise<Invoice> {
+  public async getFromKey(key: string): Promise<string> {
     return await this._storage?.get(key);
   }
 
