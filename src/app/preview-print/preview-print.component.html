@@ -1,13 +1,21 @@
+<link rel="stylesheet" type="text/scss" href="preview-print.component.scss" media="print">
+
 <ion-content>
-  <!-- back button  and print button-->
-  <div class="generated-invoice-header-box">
+  <!-- back button and print button-->
+  <div class="generated-invoice-header-box-left">
     <ion-button [routerLink]="['/tabs']">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-button>
   </div>
 
+  <div class="generated-invoice-header-box-right">
+    <ion-button (click)="print()">
+      <ion-icon name="print-outline"></ion-icon>
+    </ion-button>
+  </div>
+
   <!-- the generated invoice-->
-  <div class="generated-invoice-box">
+  <div id="invoiceDocument" class="generated-invoice-box">
     <table *ngIf="isLoaded">
       <thead>
 
