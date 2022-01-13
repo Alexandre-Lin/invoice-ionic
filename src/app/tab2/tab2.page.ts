@@ -1,13 +1,13 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AlertController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
-import { ProductConfigService } from '../services/product-config.service';
-import { StorageServiceService } from '../services/storage-service.service';
-import { Invoice } from '../shared/model/invoice';
-import { Product } from '../shared/model/product';
-import { ProductNames } from '../shared/model/product_names';
+import {ProductConfigService} from '../services/product-config.service';
+import {StorageServiceService} from '../services/storage-service.service';
+import {Invoice} from '../shared/model/invoice';
+import {Product} from '../shared/model/product';
+import {ProductNames} from '../shared/model/product-names';
 
 @Component({
   selector: 'app-tab2',
@@ -17,34 +17,36 @@ import { ProductNames } from '../shared/model/product_names';
 export class Tab2Page implements OnInit {
 
   /**
-  * List of all products name loaded from the ProductConfigService
-  */
-  product_list_names: ProductNames[] = [];
+   * List of all products name loaded from the ProductConfigService
+   */
+  productListNames: ProductNames[] = [];
 
   invoice: Invoice = {
     date: moment(),
     productList: [],
     tax: 20,
     total: 0,
-    paymentMode: "1.CB"
-  }
+    paymentMode: '1.CB',
+    customerName: null,
+    customerAdress: null
+  };
 
   newProduct: Product = {
     designation: null,
     price: null,
     quantity: null
-  }
+  };
 
   constructor(private productConfigService: ProductConfigService, private translateService: TranslateService,
-    private alertController: AlertController, private storageService: StorageServiceService,
-    private router: Router) {
+              private alertController: AlertController, private storageService: StorageServiceService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.product_list_names = this.productConfigService.getProductNameList();
+    this.productListNames = this.productConfigService.getProductNameList();
     this.invoice.tax = this.productConfigService.getTaxPercentage();
     this.productConfigService.observeChanges().subscribe(() => {
-      this.product_list_names = this.productConfigService.getProductNameList();
+      this.productListNames = this.productConfigService.getProductNameList();
       this.invoice.tax = this.productConfigService.getTaxPercentage();
     });
   }
@@ -57,14 +59,14 @@ export class Tab2Page implements OnInit {
       this.inputCustomSelectValue();
     } else {
       this.newProduct.designation = selectedOption;
-    };
+    }
   };
 
   /**
    * To input new value for product designation
    */
   async inputCustomSelectValue() {
-    let alert = await this.alertController.create({
+    const alert = await this.alertController.create({
       message: this.translateService.instant('CUSTOM'),
       inputs: [
         {
@@ -93,16 +95,13 @@ export class Tab2Page implements OnInit {
   };
 
   /**
-   * 
+   *
    * @returns if the new given product has all data input
    */
   isNewProductEmpty(): boolean {
-    if (this.newProduct.designation === null ||
+    return this.newProduct.designation === null ||
       this.newProduct.price === null
-      || this.newProduct.quantity === null) {
-      return true;
-    }
-    return false
+      || this.newProduct.quantity === null;
   }
 
   /**
@@ -121,14 +120,13 @@ export class Tab2Page implements OnInit {
    * To calculate the new total, updates the date of the invoice
    */
   calculateNewTotal(): void {
-    this.invoice.total = this.invoice.productList.reduce((total, product) => {
-      return total + product.price * product.quantity;
-    }, 0);
+    this.invoice.total = this.invoice.productList.reduce((total, product) => total + product.price * product.quantity, 0);
     this.invoice.date = moment();
   }
 
   /**
    * To delete a product from the invoice
+   *
    * @param product the product to delete
    */
   deleteProduct(product: Product): void {
@@ -143,31 +141,30 @@ export class Tab2Page implements OnInit {
    */
   print(): void {
     // conversion to french data
-    let productList: Product[] = [];
+    const productList: Product[] = [];
     this.invoice.productList.forEach((product: Product) => {
-      const index = this.product_list_names.findIndex((prod) => prod.translated_label === product.designation)
+      const index = this.productListNames.findIndex((prod) => prod.translatedLabel === product.designation);
       if (index > -1) {
         productList.push({
-          designation: this.product_list_names[index].fr_label,
+          designation: this.productListNames[index].frLabel,
           price: product.price,
           quantity: product.quantity
         });
-      }
-      else {
+      } else {
         productList.push(product);
       }
     });
     this.invoice.productList = productList;
 
     // paymentMode conversion
-    if(this.invoice.paymentMode.includes("1")){
-      this.invoice.paymentMode = "CB"
+    if (this.invoice.paymentMode.includes('1')) {
+      this.invoice.paymentMode = 'CB';
     }
-    if(this.invoice.paymentMode.includes("2")){
-      this.invoice.paymentMode = "CASH"
+    if (this.invoice.paymentMode.includes('2')) {
+      this.invoice.paymentMode = 'CASH';
     }
-    if(this.invoice.paymentMode.includes("3")){
-      this.invoice.paymentMode = "CHECK_PAYMENT"
+    if (this.invoice.paymentMode.includes('3')) {
+      this.invoice.paymentMode = 'CHECK_PAYMENT';
     }
 
 
@@ -180,14 +177,16 @@ export class Tab2Page implements OnInit {
     this.invoice.productList = [];
     this.invoice.tax = this.productConfigService.getTaxPercentage();
     this.invoice.total = 0;
-    this.invoice.paymentMode = "1.CB";
+    this.invoice.customerName = null;
+    this.invoice.customerAdress = null;
+    this.invoice.paymentMode = '1.CB';
     this.newProduct.quantity = null;
     this.newProduct.designation = null;
     this.newProduct.price = null;
 
     // redirecting
-    key.then(key => {
-      this.router.navigate(['/preview-print', key]);
+    key.then(key1 => {
+      this.router.navigate(['/preview-print', key1]);
     });
   }
 }

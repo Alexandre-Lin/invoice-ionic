@@ -1,177 +1,190 @@
 <ion-content [fullscreen]="true">
-    <div style="  
+  <div style="
     height: 95vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding-top: 5vh;">
-        <ion-list style="max-height: 90vh; overflow-y: auto;">
-            <ion-list-header>
+    <ion-list style="max-height: 90vh; overflow-y: auto;">
+
+      <ion-list-header>
+
+        <!-- customer name -->
+        <ion-input type="text" placeholder="{{'CLIENT_NAME' | translate}}" [(ngModel)]="invoice.customerName">
+        </ion-input>
+
+        <!-- customer address -->
+        <ion-input type="text" placeholder="{{'ADDRESS' | translate}}" [(ngModel)]="invoice.customerAdress">
+        </ion-input>
+
+      </ion-list-header>
+      <ion-list-header>
+        <ion-label>
+          <h1>{{"PRODUCTS" | translate}}</h1>
+        </ion-label>
+
+        <ion-item style="width: 35vw;">
+          <ion-label position="fixed">{{"PAYMENT_MODE" | translate}}</ion-label>
+
+          <ion-select [(ngModel)]="invoice.paymentMode" okText="OK"
+                      [cancelText]="translateService.instant('CANCEL')">
+            <ion-select-option [value]="CB">1.{{"CB" | translate}}</ion-select-option>
+            <ion-select-option [value]="CASH">2.{{"CASH" | translate}}</ion-select-option>
+            <ion-select-option [value]="CHECK">3.{{"CHECK_PAYMENT" | translate}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-list-header>
+
+      <!-- product saved in invoice -->
+      <ion-item *ngFor="let product of invoice.productList">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8">
+              <!-- designation -->
+              <ion-label position="fixed">{{"DESIGNATION" | translate}}</ion-label>
+
+              <ion-label>{{product.designation}}</ion-label>
+            </ion-col>
+
+            <ion-col>
+              <!-- price -->
+              <ion-label position="fixed">{{"PRICE" | translate}} (€)</ion-label>
+              <ion-label>{{product.price}}</ion-label>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+              <!-- quantity -->
+              <ion-label position="fixed">{{"QUANTITY" | translate}}</ion-label>
+              <ion-label>{{product.quantity}}</ion-label>
+            </ion-col>
+
+            <ion-col>
+              <!-- total -->
+              <ion-label>
+                {{"TOTAL" | translate}}
+              </ion-label>
+              <ion-label>
+                {{product.quantity * product.price}} €
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- delete button -->
+        <ion-button color="danger" size="large" (click)="deleteProduct(product)">{{"DELETE" | translate}}
+        </ion-button>
+      </ion-item>
+
+      <ion-item-divider>
+        <h2>
+          {{"ADD_NEW_PRODUCT" | translate}}
+        </h2>
+      </ion-item-divider>
+
+      <!-- add new product -->
+      <ion-item>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8">
+              <!-- designation -->
+              <ion-label position="fixed">{{"DESIGNATION" | translate}}</ion-label>
+
+              <ion-select #selectProductName [value]="newProduct.designation"
+                          [selectedText]="newProduct.designation"
+                          (ionChange)="selectChanged(selectProductName.value)" okText="OK"
+                          [cancelText]="translateService.instant('CANCEL')">
+
+                <ion-select-option [value]="translateService.instant('CUSTOM')">
+                  {{"CUSTOM" | translate}}
+                </ion-select-option>
+
+                <ion-select-option *ngFor="let productName of this.productListNames"
+                                   [value]="productName['translatedLabel']">
+                  {{productName['translatedLabel']}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+
+            <ion-col>
+              <!-- price -->
+              <ion-label position="fixed">{{"PRICE" | translate}} (€)</ion-label>
+              <ion-input type="number" inputmode="numeric" [(ngModel)]="newProduct.price">
+              </ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+              <!-- quantity -->
+              <ion-label position="fixed">{{"QUANTITY" | translate}}</ion-label>
+              <ion-input type="number" inputmode="numeric" [(ngModel)]="newProduct.quantity">
+              </ion-input>
+            </ion-col>
+
+            <ion-col>
+              <!-- total -->
+              <ion-label>
+                {{"TOTAL" | translate}}
+              </ion-label>
+              <ion-label>
+                {{newProduct.quantity * newProduct.price}} €
+              </ion-label>
+            </ion-col>
+
+            <ion-col>
+              <!-- add button -->
+              <ion-button [disabled]="isNewProductEmpty()" size="large" (click)="addNewProduct()">{{"ADD"
+                |
+                translate}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+      </ion-item>
+    </ion-list>
+
+
+    <ion-footer style="z-index: 50; position: sticky;">
+      <ion-toolbar>
+        <ion-title>
+          <ion-grid>
+            <ion-row>
+
+              <ion-col style="display: flex; align-items: center; justify-content: center;">
+                <!-- date -->
                 <ion-label>
-                    <h1>{{"PRODUCTS" | translate}}</h1>
+                  <i>{{"DATE" | translate}} : {{invoice.date.locale('fr').format('lll')}}</i>
+                </ion-label>
+              </ion-col>
+
+              <ion-col style="display: flex; align-items: center; justify-content: space-around;">
+                <!-- Total and tax charge included -->
+                <ion-label>
+                  <i>{{"TAX" | translate}}
+                    : {{invoice.total - invoice.total / (1 + invoice.tax / 100) | number: '1.2-2'}}
+                    €
+                    ({{invoice.tax}}%)</i>
+                  {{"TOTAL" | translate}}: {{invoice.total}} €
                 </ion-label>
 
-                <ion-item style="width: 35vw;">
-                    <ion-label position="fixed">{{"PAYMENT_MODE" | translate}}</ion-label>
-
-                    <ion-select [(ngModel)]="invoice.paymentMode" okText="OK"
-                        [cancelText]="translateService.instant('CANCEL')">
-                        <ion-select-option [value]="CB">1.{{"CB" | translate}}</ion-select-option>
-                        <ion-select-option [value]="CASH">2.{{"CASH" | translate}}</ion-select-option>
-                        <ion-select-option [value]="CHECK">3.{{"CHECK_PAYMENT" | translate}}</ion-select-option>
-                    </ion-select>
-                </ion-item>
-
-            </ion-list-header>
-
-            <!-- product saved in invoice -->
-            <ion-item *ngFor="let product of invoice.productList">
-
-                <ion-grid>
-                    <ion-row>
-                        <ion-col size="8">
-                            <!-- designation -->
-                            <ion-label position="fixed">{{"DESIGNATION" | translate}}</ion-label>
-
-                            <ion-label>{{product.designation}}</ion-label>
-                        </ion-col>
-
-                        <ion-col>
-                            <!-- price -->
-                            <ion-label position="fixed">{{"PRICE" | translate}} (€)</ion-label>
-                            <ion-label>{{product.price}}</ion-label>
-                        </ion-col>
-                    </ion-row>
-
-                    <ion-row>
-                        <ion-col size="8">
-                            <!-- quantity -->
-                            <ion-label position="fixed">{{"QUANTITY" | translate}}</ion-label>
-                            <ion-label>{{product.quantity}}</ion-label>
-                        </ion-col>
-
-                        <ion-col>
-                            <!-- total -->
-                            <ion-label>
-                                {{"TOTAL" | translate}}
-                            </ion-label>
-                            <ion-label>
-                                {{product.quantity * product.price}} €
-                            </ion-label>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-
-                <!-- delete button -->
-                <ion-button color="danger" size="large" (click)="deleteProduct(product)">{{"DELETE" | translate}}
+                <ion-button size="small" (click)="print()">
+                  <!-- print -->
+                  <ion-icon name="print-outline"></ion-icon>
                 </ion-button>
-            </ion-item>
+              </ion-col>
 
-            <ion-item-divider>
-                <h2>
-                    {{"ADD_NEW_PRODUCT" | translate}}
-                </h2>
-            </ion-item-divider>
+            </ion-row>
+          </ion-grid>
 
-            <!-- add new product -->
-            <ion-item>
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
 
-                <ion-grid>
-                    <ion-row>
-                        <ion-col size="8">
-                            <!-- designation -->
-                            <ion-label position="fixed">{{"DESIGNATION" | translate}}</ion-label>
-
-                            <ion-select #selectProductName [value]="newProduct.designation"
-                                [selectedText]="newProduct.designation"
-                                (ionChange)="selectChanged(selectProductName.value)" okText="OK"
-                                [cancelText]="translateService.instant('CANCEL')">
-
-                                <ion-select-option [value]="translateService.instant('CUSTOM')">
-                                    {{"CUSTOM" | translate}}
-                                </ion-select-option>
-
-                                <ion-select-option *ngFor="let productName of this.product_list_names"
-                                    [value]="productName['translated_label']">
-                                    {{productName['translated_label']}}
-                                </ion-select-option>
-                            </ion-select>
-                        </ion-col>
-
-                        <ion-col>
-                            <!-- price -->
-                            <ion-label position="fixed">{{"PRICE" | translate}} (€)</ion-label>
-                            <ion-input type="number" inputmode="numeric" [(ngModel)]="newProduct.price">
-                            </ion-input>
-                        </ion-col>
-                    </ion-row>
-
-                    <ion-row>
-                        <ion-col size="8">
-                            <!-- quantity -->
-                            <ion-label position="fixed">{{"QUANTITY" | translate}}</ion-label>
-                            <ion-input type="number" inputmode="numeric" [(ngModel)]="newProduct.quantity">
-                            </ion-input>
-                        </ion-col>
-
-                        <ion-col>
-                            <!-- total -->
-                            <ion-label>
-                                {{"TOTAL" | translate}}
-                            </ion-label>
-                            <ion-label>
-                                {{newProduct.quantity * newProduct.price}} €
-                            </ion-label>
-                        </ion-col>
-
-                        <ion-col>
-                            <!-- add button -->
-                            <ion-button [disabled]="isNewProductEmpty()" size="large" (click)="addNewProduct()">{{"ADD"
-                                |
-                                translate}}</ion-button>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-
-
-            </ion-item>
-        </ion-list>
-
-
-        <ion-footer style="z-index: 50; position: sticky;">
-            <ion-toolbar>
-                <ion-title>
-                    <ion-grid>
-                        <ion-row>
-
-                            <ion-col style="display: flex; align-items: center; justify-content: center;">
-                                <!-- date -->
-                                <ion-label>
-                                    <i>{{"DATE" | translate}} : {{invoice.date.locale('fr').format('lll')}}</i>
-                                </ion-label>
-                            </ion-col>
-
-                            <ion-col style="display: flex; align-items: center; justify-content: space-around;">
-                                <!-- Total and tax charge included -->
-                                <ion-label>
-                                    <i>{{"TAX" | translate}}: {{invoice.total - invoice.total/(1 + invoice.tax/100) | number: '1.2-2'}}
-                                        €
-                                        ({{invoice.tax}}%)</i>
-                                    {{"TOTAL" | translate}}: {{invoice.total}} €
-                                </ion-label>
-
-                                <ion-button size="small" (click)="print()">
-                                    <!-- print -->
-                                    <ion-icon name="print-outline"></ion-icon>
-                                </ion-button>
-                            </ion-col>
-
-                        </ion-row>
-                    </ion-grid>
-
-                </ion-title>
-            </ion-toolbar>
-        </ion-footer>
-
-    </div>
+  </div>
 </ion-content>

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ProductNames } from '../shared/model/product_names';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {ProductNames} from '../shared/model/product-names';
 
 @Injectable({
   providedIn: 'root'
@@ -11,38 +11,39 @@ export class ProductConfigService {
   /**
    * List of all products name from the file-config-products.json file
    */
-   product_list_names: ProductNames[];
+  productListNames: ProductNames[];
 
-  /** 
+  /**
    * the tax percentage, loaded from the file-config-products.json file
-  */
-  tax_percentage: number = null;
+   */
+  taxPercentage: number = null;
 
   /**
    * For detecting changes
    */
   $detectChanges: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * Load the product name list from file-config-products.json file, change the translated_label following the
    * selected language
-   * 
+   *
    * @param lang the selected language
    */
-   loadProductNameList(lang: string): void {
-    this.http.get("./assets/config/file-config-products.json",
-    {
-      responseType: "json"
-    }).subscribe(config_list => {
-      this.tax_percentage = config_list["tax_percentage"];
-      this.product_list_names = [];
-      config_list["product_names"].forEach(product_names => {
-        this.product_list_names.push({
-          "translated_label": product_names[lang],
-          "fr_label": product_names["fr"]
-        })
+  loadProductNameList(lang: string): void {
+    this.http.get('./assets/config/file-config-products.json',
+      {
+        responseType: 'json'
+      }).subscribe(configList => {
+      this.taxPercentage = configList['tax_percentage'];
+      this.productListNames = [];
+      configList['product_names'].forEach(productNames => {
+        this.productListNames.push({
+          translatedLabel: productNames[lang],
+          frLabel: productNames.fr
+        });
       });
       this.$detectChanges.next(!this.$detectChanges.value);
     });
@@ -50,36 +51,39 @@ export class ProductConfigService {
 
   /**
    * Get the list of loaded product names
+   *
    * @returns The list of loaded product names
    */
   getProductNameList(): ProductNames[] {
-    if (this.product_list_names === undefined || this.product_list_names === null) {
-      this.loadProductNameList("fr");
+    if (this.productListNames === undefined || this.productListNames === null) {
+      this.loadProductNameList('fr');
     }
-    return this.product_list_names;
+    return this.productListNames;
   }
 
   /**
    * Get the loaded tax percentage
+   *
    * @returns loaded the tax percentage
    */
   getTaxPercentage(): number {
-    if (this.tax_percentage === undefined || this.tax_percentage === null) {
-      this.loadProductNameList("fr");
+    if (this.taxPercentage === undefined || this.taxPercentage === null) {
+      this.loadProductNameList('fr');
     }
-    return this.tax_percentage;
+    return this.taxPercentage;
   }
 
   /**
    * For detecting changes from the list
+   *
    * @returns a behavior subject to detect changes
    */
   observeChanges(): BehaviorSubject<boolean> {
     return this.$detectChanges;
   }
 
-  setTaxPercentage(new_tax: number) {
-    this.tax_percentage = new_tax;
+  setTaxPercentage(newTax: number) {
+    this.taxPercentage = newTax;
     this.$detectChanges.next(!this.$detectChanges.value);
   }
 }

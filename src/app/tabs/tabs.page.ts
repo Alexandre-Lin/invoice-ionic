@@ -9,18 +9,18 @@ import { ProductConfigService } from '../services/product-config.service';
 })
 export class TabsPage {
 
-  isZh : boolean = false;
+  isZh = false;
 
   constructor(private translateService: TranslateService, private productConfigService: ProductConfigService) {
-    if (this.translateService.currentLang == "fr")
+    if (this.translateService.currentLang === 'fr')
     {
       this.isZh = false;
-      this.productConfigService.loadProductNameList("fr");
+      this.productConfigService.loadProductNameList('fr');
     }
     else
     {
       this.isZh = true;
-      this.productConfigService.loadProductNameList("zh");
+      this.productConfigService.loadProductNameList('zh');
     }
   }
 
@@ -28,17 +28,17 @@ export class TabsPage {
    * To check whether the selected language is French or Chinese each time the language toggle button is pressed
    */
   checkCurrentLanguage(): void {
-    if (this.translateService.currentLang == "fr")
+    if (this.translateService.currentLang === 'fr')
     {
-      this.translateService.use("zh");
+      this.translateService.use('zh');
       this.isZh = true;
-      this.productConfigService.loadProductNameList("zh");
+      this.productConfigService.loadProductNameList('zh');
     }
-    else 
+    else
     {
-      this.translateService.use("fr")
+      this.translateService.use('fr');
       this.isZh = false;
-      this.productConfigService.loadProductNameList("fr");
+      this.productConfigService.loadProductNameList('fr');
     }
   }
 }

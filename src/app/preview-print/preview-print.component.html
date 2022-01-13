@@ -17,130 +17,145 @@
       <tbody>
       <!-- invoice -->
       <tr>
-        <td style="font-size: 40px;">
+        <td style="font-size: 40px; padding-bottom: 3vh;">
           {{'INVOICE' | translate}}
         </td>
       </tr>
 
-      <!-- date -->
       <tr>
-        <td style="text-align: right; padding-right: 1vw;">
+        <td
+          style="padding-bottom: 2vh; display: flex;flex-direction: row; width: 90vw; justify-content: space-between;align-items: center">
+          <!-- customer's name-->
+          <span style="text-align: left; width: 50vw">
+            {{currentInvoice.customerName}}
+            <br>
+            {{currentInvoice.customerAdress}}
+          </span>
+
+          <!-- date -->
+          <span style="text-align: right; padding-right: 1vw;">
           {{currentInvoice.date.locale('fr').format('lll')}}
-        </td>
-      </tr>
-
-
-      <tr>
-        <td>
-
-        </td>
-
-        <!-- customer's name-->
-        <td>
-
+          </span>
         </td>
       </tr>
 
       <!-- payment method -->
       <tr>
-        <table>
+        <table style="margin-bottom: 5vh;">
           <thead>
-            <tr>
-              <th>
-                {{'PAYMENT_MODE_PRINTER' | translate}}
-              </th>
-            </tr>
+          <tr>
+            <th>
+              {{'PAYMENT_MODE_PRINTER' | translate}}
+            </th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                {{currentInvoice.paymentMode}}
-              </td>
-            </tr>
+          <tr>
+            <td>
+              {{currentInvoice.paymentMode}}
+            </td>
+          </tr>
           </tbody>
         </table>
       </tr>
 
       <!-- product list-->
       <tr>
-        <table>
+        <table style="margin-bottom: 2vh;">
           <thead>
-            <tr>
-              <th>
-                {{'PRODUCT_LIST_PRINTER' | translate}}
-              </th>
-              <th>
 
-              </th>
-              <th>
+          <!--
+          <tr>
+            <th>
+              {{'PRODUCT_LIST_PRINTER' | translate}}
+            </th>
+            <th>
 
-              </th>
-              <th>
+            </th>
+            <th>
 
-              </th>
-            </tr>
+            </th>
+            <th>
+
+            </th>
+          </tr>
+          -->
+          <tr>
+            <th>
+              {{'DESIGNATION' | translate}}
+            </th>
+            <th>
+              {{'PRICE' | translate}}
+            </th>
+            <th>
+              {{'QUANTITY' | translate}}
+            </th>
+            <th>
+              {{'TOTAL' | translate}}
+            </th>
+          </tr>
           </thead>
 
           <tbody>
-            <tr *ngFor="let productItem of currentInvoice.productList">
-              <td>
-                {{productItem.designation}}
-              </td>
-              <td>
-                {{productItem.price}}€
-              </td>
-              <td>
-                {{productItem.quantity}}
-              </td>
-              <td>
-                {{productItem.quantity * productItem.price}}€
-              </td>
-            </tr>
+          <tr *ngFor="let productItem of currentInvoice.productList">
+            <td>
+              {{productItem.designation}}
+            </td>
+            <td>
+              {{productItem.price}}€
+            </td>
+            <td>
+              {{productItem.quantity}}
+            </td>
+            <td>
+              {{productItem.quantity * productItem.price}}€
+            </td>
+          </tr>
           </tbody>
         </table>
       </tr>
-        
-    </tbody>
+
+      </tbody>
 
       <!-- total and tax-->
       <tfoot>
       <tr>
         <table>
           <thead>
-            <tr>
-              <th>
-                {{'TOTAL_PRINTER' | translate}}
-              </th>
-              <th>
+          <tr>
+            <th style="text-align: left">
+              {{'TOTAL_PRINTER' | translate}}
+            </th>
+            <th>
 
-              </th>
-            </tr>
+            </th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                {{'TAX_PRINTER' | translate}} ({{currentInvoice.tax}}%)
-              </td>
+          <tr>
+            <td>
+              <i>{{'TAX_PRINTER' | translate}} ({{currentInvoice.tax}}%)</i>
+            </td>
 
-              <td>
-                {{currentInvoice.total - currentInvoice.total/(1 + currentInvoice.tax/100) | number: '1.2-2'}}€
-              </td>
-            </tr>
+            <td>
+              {{currentInvoice.total - currentInvoice.total / (1 + currentInvoice.tax / 100) | number: '1.2-2'}}€
+            </td>
+          </tr>
 
-            <tr>
-              <td>
-                {{'TOTAL_PRINTER' | translate}}
-              </td>
+          <tr>
+            <td>
+              {{'TOTAL_PRINTER' | translate}}
+            </td>
 
-              <td>
-                {{currentInvoice.total}}€
-              </td>
-            </tr>
+            <td>
+              {{currentInvoice.total}}€
+            </td>
+          </tr>
 
           </tbody>
         </table>
       </tr>
-    </tfoot>
+      </tfoot>
 
     </table>
   </div>
