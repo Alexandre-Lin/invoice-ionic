@@ -41,19 +41,40 @@
 
       <tr>
         <td
-          style="padding-bottom: 2vh; display: grid;width: 90vw;font-family: sans-serif;
-          grid-template-columns: repeat(2, 1fr);text-align: center; font-size: 25px">
+          style="padding-bottom: 2vh;width: 90vw;font-family: sans-serif;text-align: center; font-size: 25px">
+          <table style="width: 100%;
+          border-collapse: collapse;
+          border-spacing: 500px;
+          color: black;">
+            <tr>
+              <th style="text-align: left; width: 50vw;font-family: sans-serif;font-size: 25px;
+                        font-weight: normal; !important;">
+                <!-- customer's name-->
+                {{currentInvoice.customerName}}
+                <br>
+                {{currentInvoice.customerAdress}}
+              </th>
+              <th style="text-align: right; padding-right: 1vw;font-family: sans-serif;font-size: 25px;
+                        font-weight: normal; !important;">
+                <!-- date -->
+                {{currentInvoice.date.locale('fr').format('lll')}}
+              </th>
+            </tr>
+          </table>
           <!-- customer's name-->
+          <!--
           <span style="text-align: left; width: 50vw;font-family: sans-serif">
             {{currentInvoice.customerName}}
             <br>
             {{currentInvoice.customerAdress}}
           </span>
+          -->
 
           <!-- date -->
-          <span style="text-align: right; padding-right: 1vw;font-family: sans-serif">
+          <!-- <span style="text-align: right; padding-right: 1vw;font-family: sans-serif">
           {{currentInvoice.date.locale('fr').format('lll')}}
           </span>
+          -->
         </td>
       </tr>
 
