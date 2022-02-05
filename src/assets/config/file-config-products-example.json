@@ -1,0 +1,75 @@
+{
+  "tax_percentage": 20,
+  "product_names": [
+    {
+      "en": "Handbag",
+      "fr": "Sac à main",
+      "zh": "test product"
+    },
+    {
+      "en": "Baggage",
+      "fr": "Bagages",
+      "zh": "test product"
+    },
+    {
+      "en": "Wallet",
+      "fr": "Portefeuille",
+      "zh": "test product"
+    },
+    {
+      "en": "Purse",
+      "fr": "Porte monnaie",
+      "zh": "test product"
+    },
+    {
+      "en": "Attache case",
+      "fr": "Attaché case",
+      "zh": "test product"
+    },
+    {
+      "en": "Bag",
+      "fr": "Sacoche",
+      "zh": "test product"
+    },
+    {
+      "en": "Travel Bag",
+      "fr": "Sac voyage",
+      "zh": "test product"
+    },
+    {
+      "en": "Backpack",
+      "fr": "Sac à dos",
+      "zh": "test product"
+    },
+    {
+      "en": "Leather goods",
+      "fr": "Maroquinerie",
+      "zh": "test product"
+    },
+    {
+      "en": "Sales",
+      "fr": "Soldes",
+      "zh": "test product"
+    },
+    {
+      "en": "Sales",
+      "fr": "Promotion",
+      "zh": "test product"
+    },
+    {
+      "en": "Jewelry",
+      "fr": "Bijouterie",
+      "zh": "test product"
+    },
+    {
+      "en": "Accessory",
+      "fr": "Accessoire",
+      "zh": "test product"
+    },
+    {
+      "en": "Other",
+      "fr": "Divers",
+      "zh": "test product"
+    }
+  ]
+}

@@ -15,8 +15,17 @@
   </div>
 
   <!-- the generated invoice-->
-  <div id="invoiceDocument" class="generated-invoice-box">
-    <table *ngIf="isLoaded">
+  <div id="invoiceDocument" class="generated-invoice-box"
+       style="width: 100vw;
+              height: 100vh;
+              background-color: white;
+              -webkit-print-color-adjust:exact;
+              padding: 1vh;">
+    <table *ngIf="isLoaded"
+           style="width: 100%;
+            border-collapse: collapse;
+            border-spacing: 500px;
+            color: black;">
       <thead>
 
       </thead>
@@ -25,14 +34,15 @@
       <tbody>
       <!-- invoice -->
       <tr>
-        <td style="font-size: 40px; padding-bottom: 3vh;">
+        <td style="font-size: 40px; padding-bottom: 3vh;text-align: center">
           {{'INVOICE' | translate}}
         </td>
       </tr>
 
       <tr>
         <td
-          style="padding-bottom: 2vh; display: flex;flex-direction: row; width: 90vw; justify-content: space-between;align-items: center">
+          style="padding-bottom: 2vh; display: flex;flex-direction: row; width: 90vw;
+           justify-content: space-between;align-items: center; text-align: center; font-size: 25px">
           <!-- customer's name-->
           <span style="text-align: left; width: 50vw">
             {{currentInvoice.customerName}}
@@ -49,7 +59,10 @@
 
       <!-- payment method -->
       <tr>
-        <table style="margin-bottom: 5vh;">
+        <table style="margin-bottom: 5vh;width: 100%;
+                      border-collapse: collapse;
+                      border-spacing: 500px;
+                      color: black;">
           <thead>
           <tr>
             <th>
@@ -59,7 +72,8 @@
           </thead>
           <tbody>
           <tr>
-            <td>
+            <td style="text-align: center;
+                       font-size: 25px;">
               {{currentInvoice.paymentMode}}
             </td>
           </tr>
@@ -69,7 +83,10 @@
 
       <!-- product list-->
       <tr>
-        <table style="margin-bottom: 2vh;">
+        <table style="margin-bottom: 2vh;width: 100%;
+                      border-collapse: collapse;
+                      border-spacing: 500px;
+                      color: black;">
           <thead>
 
           <!--
@@ -89,16 +106,32 @@
           </tr>
           -->
           <tr>
-            <th>
+            <th style="text-align: center;
+                        padding-left: 1vw;
+                        font-size: 30px;
+                        background-color: lightgray;
+                        -webkit-print-color-adjust:exact;">
               {{'DESIGNATION' | translate}}
             </th>
-            <th>
+            <th style="text-align: center;
+                        padding-left: 1vw;
+                        font-size: 30px;
+                        -webkit-print-color-adjust:exact;
+                        background-color: lightgray;">
               {{'PRICE' | translate}}
             </th>
-            <th>
+            <th style="text-align: center;
+                        padding-left: 1vw;
+                        font-size: 30px;
+                        -webkit-print-color-adjust:exact;
+                        background-color: lightgray;">
               {{'QUANTITY' | translate}}
             </th>
-            <th>
+            <th style="text-align: center;
+                        padding-left: 1vw;
+                        font-size: 30px;
+                        -webkit-print-color-adjust:exact;
+                        background-color: lightgray;">
               {{'TOTAL' | translate}}
             </th>
           </tr>
@@ -106,16 +139,20 @@
 
           <tbody>
           <tr *ngFor="let productItem of currentInvoice.productList">
-            <td>
+            <td style="text-align: center;
+                        font-size: 25px;">
               {{productItem.designation}}
             </td>
-            <td>
+            <td style="text-align: center;
+                        font-size: 25px;">
               {{productItem.price}}€
             </td>
-            <td>
+            <td style="text-align: center;
+                        font-size: 25px;">
               {{productItem.quantity}}
             </td>
-            <td>
+            <td style="text-align: center;
+                        font-size: 25px;">
               {{productItem.quantity * productItem.price}}€
             </td>
           </tr>
@@ -128,10 +165,16 @@
       <!-- total and tax-->
       <tfoot>
       <tr>
-        <table>
+        <table style=" width: 100%;
+                        border-collapse: collapse;
+                        border-spacing: 500px;
+                        color: black;">
           <thead>
           <tr>
-            <th style="text-align: left">
+            <th style="text-align: left;padding-left: 1vw;
+                        font-size: 30px;
+                        background-color: lightgray;
+                        -webkit-print-color-adjust:exact;">
               {{'TOTAL_PRINTER' | translate}}
             </th>
             <th>
@@ -141,21 +184,21 @@
           </thead>
           <tbody>
           <tr>
-            <td>
+            <td style="text-align: center; font-size: 25px;">
               <i>{{'TAX_PRINTER' | translate}} ({{currentInvoice.tax}}%)</i>
             </td>
 
-            <td>
+            <td style="text-align: center; font-size: 25px;">
               {{currentInvoice.total - currentInvoice.total / (1 + currentInvoice.tax / 100) | number: '1.2-2'}}€
             </td>
           </tr>
 
           <tr>
-            <td>
+            <td style="text-align: center; font-size: 25px;">
               {{'TOTAL_PRINTER' | translate}}
             </td>
 
-            <td>
+            <td style="text-align: center; font-size: 25px;">
               {{currentInvoice.total}}€
             </td>
           </tr>
