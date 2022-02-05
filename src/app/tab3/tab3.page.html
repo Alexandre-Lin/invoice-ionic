@@ -1,21 +1,22 @@
 <ion-content [fullscreen]="true">
 
-    <!-- change tax value temporarely-->
-    <ion-list style="padding-top: 5vh;">
-        <ion-item>
-            <ion-input [(ngModel)]="taxValue"></ion-input>
-            <ion-button (click)="changeTax()">{{"CHANGE_TAX" | translate}}</ion-button>
-        </ion-item>
-    </ion-list>
-
-    <!-- download storage data in JSON file-->
+  <!-- change tax value temporarely-->
+  <ion-list style="padding-top: 5vh;">
     <ion-item>
-        <ion-button (click)="download()">{{"DOWNLOAD" | translate}}</ion-button>
+      <ion-input [(ngModel)]="taxValue"></ion-input>
+      <ion-button (click)="changeTax()">{{"CHANGE_TAX" | translate}}</ion-button>
     </ion-item>
+  </ion-list>
 
-    <!-- upload JSON file in locale storage-->
-    <ion-item>
-        <ion-button (click)="upload()">{{"UPLOAD" | translate}}</ion-button>
-    </ion-item>
+  <!-- get storage data in JSON -->
+  <ion-item>
+    <ion-button (click)="getJSON()">{{"DOWNLOAD" | translate}}</ion-button>
+  </ion-item>
+
+  <!-- upload JSON in locale storage-->
+  <ion-item>
+    <ion-input [(ngModel)]="jsonData"></ion-input>
+    <ion-button (click)="saveJSON()" [disabled]="jsonData === null">{{"UPLOAD" | translate}}</ion-button>
+  </ion-item>
 
 </ion-content>

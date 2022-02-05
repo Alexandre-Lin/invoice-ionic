@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductConfigService} from '../services/product-config.service';
-import {File, FileEntry} from '@ionic-native/file/ngx';
-import * as moment from 'moment';
-import {FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
+import {File} from '@ionic-native/file/ngx';
+import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {StorageServiceService} from '../services/storage-service.service';
 import {DocumentPicker} from '@ionic-native/document-picker/ngx';
 import {InvoiceItem} from '../shared/model/invoice-item';
+import {TextStorageService} from '../services/text-storage.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -19,11 +20,15 @@ export class Tab3Page implements OnInit {
 
   timeNow = null;
 
+  jsonData = null;
+
   constructor(private productConfigService: ProductConfigService,
               private storageService: StorageServiceService,
               private transfer: FileTransfer,
               private file: File,
-              private docPicker: DocumentPicker
+              private docPicker: DocumentPicker,
+              private textStorage: TextStorageService,
+              private router: Router
   ) {
   }
 
@@ -35,49 +40,32 @@ export class Tab3Page implements OnInit {
     this.productConfigService.setTaxPercentage(this.taxValue);
   }
 
-  download() {
-    const fileTransfer: FileTransferObject = this.transfer.create();
-
-    let text = '';
-
+  /**
+   * Get the data stored in the app in JSON
+   */
+  getJSON() {
     this.storageService.getAllInvoices().then(invoices => {
-      text = JSON.stringify(invoices);
-      this.timeNow = moment().format('DD-MM-YYYY-hh-mm-ss');
-      this.file.checkFile(this.file.dataDirectory, this.timeNow + '.json')
-        .then(doesExist => {
-          console.log('doesExist : ' + doesExist);
-          return this.file.writeExistingFile(this.file.dataDirectory, this.timeNow + '.json', text);
-        }).catch(err => this.file.createFile(this.file.dataDirectory, this.timeNow + '.json', false)
-        .then(fileEntry => this.file.writeExistingFile(this.file.dataDirectory, this.timeNow + '.json', text))
-        .catch(err1 => console.log('Couldnt create file')));
-
-      // iOS download only
-      fileTransfer.download(this.file.dataDirectory + this.timeNow + '.json', this.file.documentsDirectory).then((entry) => {
-      }, (error) => {
-      });
+      this.textStorage.store(JSON.stringify(invoices));
+      this.router.navigate(['text-view']);
     });
   }
 
-  upload() {
-    this.docPicker.getFile('all')
-      .then(uri => this.file.resolveLocalFilesystemUrl(uri).then(entry => {
-        (entry as FileEntry).file(file => {
-          file.text().then(text => {
-            const invoices: InvoiceItem[] = JSON.parse(text);
-            invoices.forEach((invoice) => {
-              this.storageService.save({
-                date: invoice.date,
-                productList: invoice.productList,
-                paymentMode: invoice.paymentMode,
-                tax: invoice.tax,
-                total: invoice.total,
-                customerAdress: invoice.customerAdress,
-                customerName: invoice.customerName
-              });
-            });
-          });
-        });
-      }))
-      .catch(e => console.log(e));
+  /**
+   * Save data (JSON format) in the device
+   */
+  saveJSON(): void {
+    const invoices: InvoiceItem[] = JSON.parse(this.jsonData);
+    invoices.forEach((invoice) => {
+      this.storageService.save({
+        date: invoice.date,
+        productList: invoice.productList,
+        paymentMode: invoice.paymentMode,
+        tax: invoice.tax,
+        total: invoice.total,
+        customerAdress: invoice.customerAdress,
+        customerName: invoice.customerName
+      });
+    });
+    this.jsonData = null;
   }
 }

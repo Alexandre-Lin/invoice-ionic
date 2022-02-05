@@ -14,7 +14,7 @@
             <!-- date -->
             <ion-label position="fixed">{{"DATE" | translate}}</ion-label>
 
-            <ion-label>{{invoice.date.locale("fr").format("lll")}}</ion-label>
+            <ion-label>{{invoice.date.locale("fr").format("L LT")}}</ion-label>
           </ion-col>
 
           <ion-col>
@@ -38,7 +38,7 @@
               {{"PAYMENT_MODE" | translate}}
             </ion-label>
             <ion-label>
-              {{invoice.paymentMode}}
+              {{invoice.paymentMode | translate}}
             </ion-label>
           </ion-col>
         </ion-row>

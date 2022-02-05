@@ -20,6 +20,8 @@ import {File} from '@ionic-native/file/ngx';
 import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {DocumentPicker} from '@ionic-native/document-picker/ngx';
 import {Printer} from '@ionic-native/printer/ngx';
+import {Clipboard} from '@awesome-cordova-plugins/clipboard/ngx';
+import {TextViewComponent} from "./text-view/text-view.component";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -27,7 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, PreviewPrintComponent],
+  declarations: [AppComponent, PreviewPrintComponent, TextViewComponent],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -46,7 +48,10 @@ export function createTranslateLoader(http: HttpClient) {
         defaultLanguage: "fr"
       }
     )],
-  providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, File, FileTransfer, DocumentPicker, Printer],
+  providers: [{
+    provide: RouteReuseStrategy,
+    useClass: IonicRouteStrategy
+  }, File, FileTransfer, DocumentPicker, Printer, Clipboard],
   bootstrap: [AppComponent],
 })
 export class AppModule {
