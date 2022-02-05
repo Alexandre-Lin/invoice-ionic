@@ -10,6 +10,7 @@
   top: 0;
 }
 
+/**
 .generated-invoice-box {
   width: 100vw;
   height: 100vh;
@@ -35,43 +36,4 @@
     }
   }
 }
-
-@media print {
-  .generated-invoice-header-box-left {
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  .generated-invoice-header-box-right {
-    position: fixed;
-    right: 0;
-    top: 0;
-  }
-
-  .generated-invoice-box {
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
-    padding: 1vh;
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 500px;
-      color: black;
-
-      td {
-        text-align: center;
-        font-size: 25px;
-      }
-
-      th {
-        text-align: center;
-        padding-left: 1vw;
-        font-size: 30px;
-        background-color: lightgray;
-      }
-    }
-  }
-}
+*/
