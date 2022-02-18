@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
 import {StorageServiceService} from '../services/storage-service.service';
@@ -33,7 +33,11 @@ export class PreviewPrintComponent implements OnInit {
   // loading boolean
   isLoaded = false;
 
+  // if it is another language than French
+  isFrenchLanguage = true;
+
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private storageService: StorageServiceService,
               private translateService: TranslateService,
               private printer: Printer) {
@@ -43,6 +47,10 @@ export class PreviewPrintComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.isLoaded = false;
       this.currentKey = params.key;
+      if (this.translateService.currentLang !== 'fr') {
+        this.translateService.use('fr');
+        this.isFrenchLanguage = false;
+      }
       this.storageService.getFromKey(this.currentKey).then(invoice => {
         this.currentInvoice = JSON.parse(invoice);
         this.currentInvoice.date = moment(this.currentInvoice.date);
@@ -77,5 +85,15 @@ export class PreviewPrintComponent implements OnInit {
     }, (err) => {
       console.log('error:', err);
     });
+  }
+
+  /**
+   * Return to the homepage
+   */
+  returnHome(): void {
+    if (!this.isFrenchLanguage) {
+      this.translateService.use('zh');
+    }
+    this.router.navigate(['/tabs']);
   }
 }
