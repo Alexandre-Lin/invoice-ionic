@@ -6,6 +6,8 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import {BehaviorSubject} from 'rxjs';
 import {Invoice} from '../shared/model/invoice';
 import {InvoiceItem} from '../shared/model/invoice-item';
+import * as moment from 'moment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,28 @@ export class StorageServiceService {
   }
 
   /**
+   * Gives the new Invoice Number, if a new year has started,
+   * then the count will fallback to 1
+   */
+  public async getNewInvoiceNumber(): Promise<number> {
+    const keys = await this.mainStorage?.keys();
+    let newNumber = 1;
+    if (keys.length !== 0) {
+      // get last invoice
+      const maxKey = Math.max.apply(Math, keys.map((key) => +key));
+      const lastInvoice: Invoice = JSON.parse(await this.getFromKey(maxKey.toString()));
+
+      // check if new year or not
+      if (moment(lastInvoice.date).year() !== moment().year()) {
+        newNumber = 1;
+      } else {
+        newNumber = lastInvoice.invoiceNumber + 1;
+      }
+      return newNumber;
+    }
+  }
+
+  /**
    * To get invoice from the selected key
    *
    * @param key the selected key
@@ -63,6 +87,9 @@ export class StorageServiceService {
       const invoice: Invoice = JSON.parse(value);
       invoices.push({
         keyStoredId: key,
+        invoiceNumber: invoice.invoiceNumber,
+        companyAddress: invoice.companyAddress,
+        companyName: invoice.companyName,
         date: invoice.date,
         total: invoice.total,
         tax: invoice.tax,

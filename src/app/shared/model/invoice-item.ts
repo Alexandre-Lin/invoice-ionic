@@ -4,6 +4,9 @@ import {Moment} from 'moment';
 
 export interface InvoiceItem {
   keyStoredId: string;
+  invoiceNumber: number;
+  companyName: string;
+  companyAddress: string;
   date: Moment;
   productList: Product[];
   // tax percentage (not the tax charge amount)

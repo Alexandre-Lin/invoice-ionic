@@ -20,6 +20,9 @@ export class PreviewPrintComponent implements OnInit {
   currentInvoice: Invoice = {
     date: null,
     productList: [],
+    companyName: null,
+    companyAddress: null,
+    invoiceNumber: null,
     total: null,
     tax: null,
     paymentMode: null,

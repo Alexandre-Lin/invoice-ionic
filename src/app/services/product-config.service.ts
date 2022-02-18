@@ -92,6 +92,16 @@ export class ProductConfigService {
   }
 
   /**
+   * Get Company Address
+   */
+  getCompanyAddress(): string {
+    if (this.companyAddress === undefined || this.companyAddress === null) {
+      this.loadProductNameList('fr');
+    }
+    return this.companyAddress;
+  }
+
+  /**
    * For detecting changes from the list
    *
    * @returns a behavior subject to detect changes

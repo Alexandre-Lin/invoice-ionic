@@ -33,5 +33,6 @@
   "TAX_PRINTER": "税收",
   "INVOICE": "发票",
   "ADDRESS": "地址",
-  "CLIENT_NAME": "客户名称"
+  "CLIENT_NAME": "客户名称",
+  "NUMBER_ABBREV": "n°"
 }

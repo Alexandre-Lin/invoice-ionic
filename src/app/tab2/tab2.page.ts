@@ -24,6 +24,9 @@ export class Tab2Page implements OnInit {
   invoice: Invoice = {
     date: moment(),
     productList: [],
+    companyName: null,
+    companyAddress: null,
+    invoiceNumber: null,
     tax: 20,
     total: 0,
     paymentMode: '1.CB',
@@ -140,53 +143,65 @@ export class Tab2Page implements OnInit {
    * and print page)
    */
   print(): void {
-    // conversion to french data
-    const productList: Product[] = [];
-    this.invoice.productList.forEach((product: Product) => {
-      const index = this.productListNames.findIndex((prod) => prod.translatedLabel === product.designation);
-      if (index > -1) {
-        productList.push({
-          designation: this.productListNames[index].frLabel,
-          price: product.price,
-          quantity: product.quantity
-        });
-      } else {
-        productList.push(product);
+    // get new invoice number
+    this.storageService.getNewInvoiceNumber().then(newNumber => {
+      this.invoice.invoiceNumber = newNumber;
+
+      // conversion to french data
+      const productList: Product[] = [];
+      this.invoice.productList.forEach((product: Product) => {
+        const index = this.productListNames.findIndex((prod) => prod.translatedLabel === product.designation);
+        if (index > -1) {
+          productList.push({
+            designation: this.productListNames[index].frLabel,
+            price: product.price,
+            quantity: product.quantity
+          });
+        } else {
+          productList.push(product);
+        }
+      });
+      this.invoice.productList = productList;
+
+      // paymentMode conversion
+      if (this.invoice.paymentMode.includes('1')) {
+        this.invoice.paymentMode = 'CB';
       }
-    });
-    this.invoice.productList = productList;
+      if (this.invoice.paymentMode.includes('2')) {
+        this.invoice.paymentMode = 'CASH';
+      }
+      if (this.invoice.paymentMode.includes('3')) {
+        this.invoice.paymentMode = 'CHECK_PAYMENT';
+      }
 
-    // paymentMode conversion
-    if (this.invoice.paymentMode.includes('1')) {
-      this.invoice.paymentMode = 'CB';
-    }
-    if (this.invoice.paymentMode.includes('2')) {
-      this.invoice.paymentMode = 'CASH';
-    }
-    if (this.invoice.paymentMode.includes('3')) {
-      this.invoice.paymentMode = 'CHECK_PAYMENT';
-    }
+      // adding company name, company address
+      this.invoice.companyName = this.productConfigService.getCompanyName();
+      this.invoice.companyAddress = this.productConfigService.getCompanyAddress();
 
 
-    // saving in locale storage
-    const invoiceToSave: Invoice = JSON.parse(JSON.stringify(this.invoice));
-    const key = this.storageService.save(invoiceToSave);
+      // saving in locale storage
+      const invoiceToSave: Invoice = JSON.parse(JSON.stringify(this.invoice));
+      const key = this.storageService.save(invoiceToSave);
 
-    //cleaning the page
-    this.invoice.date = moment();
-    this.invoice.productList = [];
-    this.invoice.tax = this.productConfigService.getTaxPercentage();
-    this.invoice.total = 0;
-    this.invoice.customerName = null;
-    this.invoice.customerAdress = null;
-    this.invoice.paymentMode = '1.CB';
-    this.newProduct.quantity = null;
-    this.newProduct.designation = null;
-    this.newProduct.price = null;
+      //cleaning the page
+      this.invoice.date = moment();
+      this.invoice.invoiceNumber = null;
+      this.invoice.companyAddress = null;
+      this.invoice.companyName = null;
+      this.invoice.productList = [];
+      this.invoice.tax = this.productConfigService.getTaxPercentage();
+      this.invoice.total = 0;
+      this.invoice.customerName = null;
+      this.invoice.customerAdress = null;
+      this.invoice.paymentMode = '1.CB';
+      this.newProduct.quantity = null;
+      this.newProduct.designation = null;
+      this.newProduct.price = null;
 
-    // redirecting
-    key.then(key1 => {
-      this.router.navigate(['/preview-print', key1]);
+      // redirecting
+      key.then(key1 => {
+        this.router.navigate(['/preview-print', key1]);
+      });
     });
   }
 }

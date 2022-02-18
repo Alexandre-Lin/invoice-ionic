@@ -58,6 +58,9 @@ export class Tab3Page implements OnInit {
     invoices.forEach((invoice) => {
       this.storageService.save({
         date: invoice.date,
+        invoiceNumber: invoice.invoiceNumber,
+        companyAddress: invoice.companyAddress,
+        companyName: invoice.companyName,
         productList: invoice.productList,
         paymentMode: invoice.paymentMode,
         tax: invoice.tax,

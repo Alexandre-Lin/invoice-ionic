@@ -31,5 +31,6 @@
   "TAX_PRINTER": "Taxe",
   "INVOICE": "Facture",
   "ADDRESS": "Adresse",
-  "CLIENT_NAME": "Nom Client"
+  "CLIENT_NAME": "Nom Client",
+  "NUMBER_ABBREV": "n°"
 }
