@@ -1,5 +1,7 @@
 {
   "tax_percentage": 20,
+  "company_name": "Company name",
+  "company_address": "Company address",
   "product_names": [
     {
       "en": "Handbag",

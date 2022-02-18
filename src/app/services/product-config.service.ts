@@ -19,6 +19,12 @@ export class ProductConfigService {
   taxPercentage: number = null;
 
   /**
+   * Company information
+   */
+  companyName: string = null;
+  companyAddress: string = null;
+
+  /**
    * For detecting changes
    */
   $detectChanges: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -38,6 +44,8 @@ export class ProductConfigService {
         responseType: 'json'
       }).subscribe(configList => {
       this.taxPercentage = configList['tax_percentage'];
+      this.companyName = configList['company_name'];
+      this.companyAddress = configList['company_address'];
       this.productListNames = [];
       configList['product_names'].forEach(productNames => {
         this.productListNames.push({
@@ -71,6 +79,16 @@ export class ProductConfigService {
       this.loadProductNameList('fr');
     }
     return this.taxPercentage;
+  }
+
+  /**
+   * Get Company Name
+   */
+  getCompanyName(): string {
+    if (this.companyName === undefined || this.companyName === null) {
+      this.loadProductNameList('fr');
+    }
+    return this.companyName;
   }
 
   /**

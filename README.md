@@ -19,7 +19,8 @@ the language file is ready.)
 The application uses the Ionic Angular Storage package.
 
 There is a file named file-config-products.json loacted in assets folder which permits to load some products' value at
-start. (also the tax is included, view file-config-products-example.json for example).
+start. (also the tax, company name, company address are also included, view file-config-products-example.json for
+example).
 
 All the printed invoices will be in French, the others languages are only for the users' comfort when creating invoices.
 
