@@ -47,7 +47,7 @@
           border-spacing: 500px;
           color: black;">
             <tr>
-              <th style="text-align: right; padding-right: 1vw;font-family: sans-serif;font-size: 25px;
+              <th style="text-align: left; padding-right: 1vw;font-family: sans-serif;font-size: 25px;
                         font-weight: normal; !important;">
                 <!-- company informations -->
                 {{currentInvoice.companyName}}
@@ -57,7 +57,7 @@
                 <!-- date -->
                 {{currentInvoice.date.locale('fr').format('ll')}}
               </th>
-              <th style="text-align: left; width: 50vw;font-family: sans-serif;font-size: 25px;
+              <th style="text-align: right; width: 50vw;font-family: sans-serif;font-size: 25px;
                         font-weight: normal; !important;">
                 <!-- customer's name-->
                 {{currentInvoice.customerName}}
