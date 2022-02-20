@@ -68,8 +68,8 @@ export class StorageServiceService {
       } else {
         newNumber = lastInvoice.invoiceNumber + 1;
       }
-      return newNumber;
     }
+    return newNumber;
   }
 
   /**
